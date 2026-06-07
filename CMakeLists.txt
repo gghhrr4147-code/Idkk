@@ -13,14 +13,13 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     $ENV{LL_SDK}/include
     $ENV{LL_SDK}/src
+    $ENV{LL_SDK}/third-party/concurrentqueue
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
     -fPIC
     -O2
     -fvisibility=hidden
-    -fno-rtti
-    -fno-exceptions
     -Wno-unused-parameter
 )
 
