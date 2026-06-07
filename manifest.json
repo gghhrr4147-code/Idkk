@@ -1,0 +1,11 @@
+{
+    "name": "BowNetherPlugin",
+    "version": "1.0.0",
+    "type": "native",
+    "entry": "BowNetherPlugin.so",
+    "description": "Bow: reload+tp ke nether. u_def: entity kebal total.",
+    "author": "",
+    "dependencies": [
+        { "name": "LeviLamina" }
+    ]
+}
