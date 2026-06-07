@@ -25,7 +25,8 @@ jobs:
 
       - name: Clone LeviLamina SDK
         run: |
-          git clone --depth=1 https://github.com/LiteLDev/LeviLamina.git ll_sdk
+          git clone --depth=1 --recurse-submodules \
+            https://github.com/LiteLDev/LeviLamina.git ll_sdk
           echo "LL_SDK=$PWD/ll_sdk" >> $GITHUB_ENV
 
       - name: Build
