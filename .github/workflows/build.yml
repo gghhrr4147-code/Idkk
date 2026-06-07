@@ -1,0 +1,44 @@
+name: Build BowNetherPlugin
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y cmake ninja-build clang git wget unzip
+
+      - name: Setup NDK
+        run: |
+          wget -q https://dl.google.com/android/repository/android-ndk-r26d-linux.zip
+          unzip -q android-ndk-r26d-linux.zip
+          echo "NDK=$PWD/android-ndk-r26d" >> $GITHUB_ENV
+
+      - name: Clone LeviLamina SDK
+        run: |
+          git clone --depth=1 https://github.com/LiteLDev/LeviLamina.git ll_sdk
+          echo "LL_SDK=$PWD/ll_sdk" >> $GITHUB_ENV
+
+      - name: Build
+        run: |
+          cmake -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
+            -DANDROID_ABI=arm64-v8a \
+            -DANDROID_PLATFORM=android-24
+          cmake --build build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BowNetherPlugin
+          path: build/BowNetherPlugin.so
